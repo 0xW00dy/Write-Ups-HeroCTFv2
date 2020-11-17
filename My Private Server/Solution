@@ -1,0 +1,18 @@
+Solution:
+
+On accède à une page de login.
+
+On pense donc à une faille SQL:
+On teste différents payloads:
+
+' OR 1=1 #
+
+On message d'erreur apparaît: "Are you trying to hack me??"
+
+On doit donc tester autre chose:
+
+admin' #
+
+Et voilà on a le flag !
+
+Welcome back admin, your last message was : Hero{b4s1c_sql_1nj3ct1on}
